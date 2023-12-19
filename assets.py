@@ -106,6 +106,8 @@ controls = """
 |                                                                                                               |
 | ['back' to navigate back from sub-menus such as 'move' and 'bag']                                             |
 |                                                                                                               |
+| ['status' to print out your stats]                                                                            |
+|                                                                                                               |
 | ['move' to open the movement-menu.]                                                                           |
 |                                                                                                               |
 | ['look' to look around observe your environment and to find loot.]                                            |

@@ -13,7 +13,7 @@ class Character:
     self.alive = True
   
   def __str__(self) -> str:
-    print(f"name: {self.name} health: {self.health} attack: {self.attack}")
+    print(f"\nname: {self.name} health: {self.health} attack: {self.attack}")
     
   def get_health(self) -> int:
     return self.health

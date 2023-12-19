@@ -225,7 +225,7 @@ def create_char():
     if len(player_input) > 20:
       print("\nI don't remember my name being this long.. I need to think harder..")
     else:
-      player = Character(str(player_input))
+      player = Character(str(player_input.capitalize()))
       return player
     
 # Creates player and dungeon objects to player_menu function if the user wants to play-----
@@ -256,6 +256,8 @@ def player_menu(player_char, dungeon):
       break
     elif player_input == "help":
       print(controls)
+    elif player_input == "status":
+      player_char.__str__()
     elif player_input == "move":
       player_move(player_char, dungeon)
     elif player_input == "look":
