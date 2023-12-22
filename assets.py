@@ -114,6 +114,12 @@ descriptions = [
     "\na warm room with marble walls and two thick wooden doors leading north and west. a round opening in the ceiling projects a pillar of light in the center of the room.", # coords: (5.5)
 ]
 
+sword_in_inventory = '\nDungeon Master: "Ah, a mighty sword in your inventory! Are you saving it for a tea party, adventurer? Wield your assets!"'
+
+no_sword_in_inventory = '\nDungeon Master: "Empty-handed? Did you plan to tickle me into submission? Your preparation is as sharp as a butter knife, my brave hero."'
+
+sword_is_equipped = '\nDungeon Master: "Well, well! A sword in hand. I didnt expect that. Now youve got my attention, adventurer. Lets hope you know how to use it."'
+
 wrong_input = "[Invalid input, type 'help' to list the game controls.]"
 
 fight_help = """

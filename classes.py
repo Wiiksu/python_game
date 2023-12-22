@@ -81,13 +81,13 @@ class Character:
   def use_item(self, player_input):
     player_input_lower = player_input.lower()
     if player_input_lower in self.inventory:
-      print(f"\nI decide to use {player_input_lower}")
       if player_input_lower == "potion":
         print("\nI feel invigorated!")
         self.inventory.remove(player_input_lower)
-        self.health += 50
-        if self.health > 100:
-          self.health == 100
+        if self.health <= 50:
+          self.health += 50
+        else:
+          self.health = 100
         print(f"\n{self.name} health points: {self.health}")  
       elif player_input_lower == "the sword of vanquishing":
         print("\nThe power of the sword flows through me!")
