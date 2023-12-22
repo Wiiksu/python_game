@@ -13,7 +13,7 @@ class Character:
     self.alive = True
   
   def __str__(self) -> str:
-    print(f"\nname: {self.name} health: {self.health} attack: {self.attack}")
+    print(f"\n[name: {self.name}, health: {self.health}, attack: {self.attack}]")
     
   def get_health(self) -> int:
     return self.health
@@ -85,10 +85,10 @@ class Character:
       if player_input_lower == "potion":
         print("\nI feel invigorated!")
         self.inventory.remove(player_input_lower)
-        if self.health <= 80:
-          self.health += 20
-        else:
+        self.health += 50
+        if self.health > 100:
           self.health == 100
+        print(f"\n{self.name} health points: {self.health}")  
       elif player_input_lower == "the sword of vanquishing":
         print("\nThe power of the sword flows through me!")
         self.inventory.remove(player_input_lower)
@@ -101,9 +101,20 @@ class Character:
         print("\nI put on the crown and prepare myself..")
         self.inventory.remove(player_input_lower)
         return "good_end"
+      elif player_input_lower == "dung":
+        print("\nI'm not sure what came over me, but I decide to eat literal shit.")
+        self.inventory.remove(player_input_lower)
+        print("\nI feel sick..")
+        self.health -= 20
+        print(f"\n{self.name} health points: {self.health}")
+        print("\nThat was dumb..")
       elif player_input_lower == "old key":
         print("\nI have a feeling this key is somehow important..")
-        return "key"
+      elif player_input_lower in ["scroll part 1", "scroll part 2", "scroll part 3"]:
+        print("\nI should find all the parts to make sense of this..")
+      elif player_input_lower == "ancient scroll":
+        print("\nAs I unravel the ancient scroll, the words resonate in my mind: ")
+        return "open_scroll"
     else:
       print("\nI have no such item in my inventory")
       return "invalid_input"
@@ -114,8 +125,8 @@ class Character:
 class Goblin(Character):
   def __init__(self):
     self.id = id(self)
-    self.name = "Goblin"
-    self.attack = int(3)
+    self.name = "the goblin"
+    self.attack = int(5)
     self.health = int(20)
     self.alive = True
     
@@ -127,8 +138,8 @@ class Goblin(Character):
 class Orc(Character):
   def __init__(self):
     self.id = id(self)
-    self.name = "Orc"
-    self.attack = int(5)
+    self.name = "the orc"
+    self.attack = int(10)
     self.health = int(40)
     self.alive = True
     
@@ -140,7 +151,7 @@ class Orc(Character):
 class Boss(Character):
   def __init__(self):
     self.id = id(self)
-    self.name = "The Dungeon Master"
+    self.name = "the dungeon master"
     self.attack = int(20)
     self.health = int(125)
     self.alive = True

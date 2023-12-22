@@ -1,6 +1,6 @@
 import time
 from classes import Room, Goblin, Orc, Boss, Character
-from assets import descriptions, welcome_screen, thanks, over, wrong_input, controls, move_help, inventory_help, fight_help, intro_text, good, bad
+from assets import descriptions, welcome_screen, thanks, over, wrong_input, controls, move_help, inventory_help, fight_help, intro_text, good, bad, scroll
 
 # Game ascii-screens-----
 
@@ -33,6 +33,11 @@ def bad_end():
   for char in bad:
       print(char, end='', flush=True)
       time.sleep(0.001)
+      
+def open_scroll():
+  for char in scroll:
+      print(char, end='', flush=True)
+      time.sleep(0.001)
 
 # Create enemy and room objects to dungeon list and return-----
 
@@ -50,25 +55,25 @@ def create_dungeon():
   Dungeon_Master = Boss()
   
   r1 = Room("The Sword of Vanquishing", Orc3, descriptions[0], coords=(1,1))
-  r2 = Room("Old Key", None, descriptions[1], coords=(2,1))
+  r2 = Room(None, None, descriptions[1], coords=(2,1))
   r3 = Room(None, None, descriptions[2], coords=(3,1))
-  r4 = Room("Potion", Goblin5, descriptions[3], coords=(4,1))
+  r4 = Room("Dung", Goblin5, descriptions[3], coords=(4,1))
   r5 = Room(None, None, descriptions[4], coords=(5,1))
   r6 = Room(None, None, descriptions[5], coords=(1,2))
-  r7 = Room(None, Goblin4, descriptions[6], coords=(2,2))
+  r7 = Room("Scroll Part 3", Goblin4, descriptions[6], coords=(2,2))
   r8 = Room(None, None, descriptions[7], coords=(3,2))
   r9 = Room(None, None, descriptions[8], coords=(4,2))
-  r10 = Room(None, None, descriptions[9], coords=(5,2))
+  r10 = Room("Old Key", None, descriptions[9], coords=(5,2))
   r11 = Room(None, None, descriptions[10], coords=(1,3))
   r12 = Room(None, None, descriptions[11], coords=(2,3))
   r13 = Room("The Crown of Domination", Dungeon_Master, descriptions[12], visual=skull, coords=(3,3))
   r14 = Room(None, None, descriptions[13], coords=(4,3))
   r15 = Room("Potion", Orc2, descriptions[14], coords=(5,3))
-  r16 = Room(None, Goblin3, descriptions[15], coords=(1,4))
+  r16 = Room("Dung", Goblin3, descriptions[15], coords=(1,4))
   r17 = Room(None, None, descriptions[16], coords=(2,4))
-  r18 = Room(None, Goblin2, descriptions[17], coords=(3,4))
+  r18 = Room("Scroll Part 2", Goblin2, descriptions[17], coords=(3,4))
   r19 = Room(None, None, descriptions[18], coords=(4,4))
-  r20 = Room(None, Goblin1, descriptions[19], coords=(5,4))
+  r20 = Room("Scroll Part 1", Goblin1, descriptions[19], coords=(5,4))
   r21 = Room("Potion", Orc1, descriptions[20], coords=(1,5))
   r22 = Room(None, None, descriptions[21], coords=(2,5))
   r23 = Room(None, None, descriptions[22], coords=(3,5))
@@ -103,6 +108,45 @@ def open_map(room, player_coords):
       
   print(map_str)
   
+# helper for look_around() function to make enemy names grammatically correct
+  
+def get_enemy_placeholder(enemy_name):
+    if enemy_name == "the goblin":
+        return "a goblin"
+    elif enemy_name == "the orc":
+        return "an orc"
+    else:
+        return enemy_name
+
+# helper for look_around() function to make item names grammatically correct
+  
+def get_item_placeholder(item_name):
+    if item_name == "Potion":
+      return "a potion, this could be handy."
+    elif item_name == "Scroll Part 1" or item_name == "Scroll Part 2" or item_name == "Scroll Part 3":
+      return "a ripped piece of what seems to be an ancient scroll, I should collect all the parts."
+    elif item_name == "The Sword of Vanquishing":
+      return "a sword that stands out from all the other rusted weapons inside the room. The blade glows with a faint light and the pommel has carved runes on it. Cool! Maybe I should use this?"
+    elif item_name == "The Crown of Domination":
+      return "the crown that fell from the dark lords head as I bested him. The crown seems to suck all light around it except the glow from my sword. The runes on the crown look inverted, maybe it's a clue?"
+    elif item_name == "Old Key":
+      return "an old key, this seems important."
+    elif item_name == "Dung":
+      return "goblin-shit? ewwww.."
+    else:
+        return item_name
+      
+# keeps track of the scroll parts in players inventory
+          
+def check_scroll(player_inventory):
+  if "scroll part 1" in player_inventory and "scroll part 2" in player_inventory and "scroll part 3" in player_inventory:
+    print("\nFinally I have all the parts! I piece them all together and place the newly formed scroll inside my bag.")
+    parts_to_remove = ["scroll part 1", "scroll part 2", "scroll part 3"]
+    for part in parts_to_remove:
+      if part in player_inventory:
+          player_inventory.remove(part)
+    player_inventory.append("ancient scroll")
+      
 # Check for loot in room-objects and add to player-object inventory-----
   
 def look_around(dungeon, player_coords, player_inventory):
@@ -110,14 +154,19 @@ def look_around(dungeon, player_coords, player_inventory):
     if room.coords == tuple(player_coords):
         print(room.description)
         if room.has_enemy(player_coords) and room.enemy.alive:
-          print(f"\nI am not alone.. I peer into the shadows and spot {room.enemy.name}")
+          enemy_placeholder = get_enemy_placeholder(room.enemy.name)
+          print(f"\nI am not alone.. I peer into the shadows and spot {enemy_placeholder}")
         elif room.loot != None and room.enemy == None:
-          print(f"\nSomething glimmers in the corner of my eye.. I pick up {room.loot}!")
+          loot_placeholder_empty = get_item_placeholder(room.loot)
+          print(f"\nSomething in the room catches my attention.. I pick up {loot_placeholder_empty}.")
           player_inventory.append(room.loot.lower())
+          check_scroll(player_inventory)
           room.loot = None
         elif room.loot != None and room.enemy.alive == False:
-          print(f"\nSomething glimmers in the corner of my eye.. I pick up {room.loot}!")
+          loot_placeholder_enemy = get_item_placeholder(room.loot)
+          print(f"\nNow that the room is clear of the threat I look around and pick up {loot_placeholder_enemy}.")
           player_inventory.append(room.loot.lower())
+          check_scroll(player_inventory)
           room.loot = None
           
 # Check room objects for enemy objects for fight-function-----
@@ -132,40 +181,40 @@ def check_for_enemy(dungeon, player_coords, player_char):
             result = player_fight(player_char, room.enemy)
             if result == True:
               return True
-          elif player_input == "n":
-            print(f"\nI sneak past {room.enemy.name} leaving all possible loot behind..")
+          elif player_input == "n" or player_input == "back":
+            print(f"\nI sneak past {room.enemy.name} leaving all possible loot behind. Am I really this scared?")
           elif player_input == "help":
             print(fight_help)
           else:
             print(wrong_input)
         elif room.has_enemy(player_coords) and room.enemy.alive == False:
-          print(f"\n{room.enemy.name} is definitely dead. No use in defiling a corpse..")
+          print(f"\n{room.enemy.name.capitalize()} is definitely dead. No use in defiling a corpse?")
         else:
-          print(f"\n{player_char.name} starts shadow-boxing as there are no opponents in the room..")
+          print(f"\n{player_char.name} starts shadow-boxing as there are no opponents in the room. Not a bad workout!")
           
 # Player and Enemy object fight-logic, returns boolean depending on outcome-----
 
 def player_fight(player_char, enemy):
-  print("\nCombat started!")
+  print("\nCombat has started! I put on my war-face and charge the enemy!")
   while player_char.alive and enemy.alive:
     time.sleep(0.5)
-    print(f"{player_char.name} attacks!")
+    print(f"{player_char.name} attacks! Take that!!")
     enemy.set_health(player_char.attack)
     time.sleep(0.5)
-    print(f"{player_char.name} dealt {player_char.attack} damage to {enemy.name}! {enemy.name} has {enemy.health} health left!")
+    print(f"{player_char.name} dealt {player_char.attack} damage to {enemy.name}! {enemy.name.capitalize()} has {enemy.health} health left!")
     if enemy.alive == False:
-      print(f"{enemy.name} dies!")
+      print(f"{enemy.name.capitalize()} dies!")
       time.sleep(0.5)
-      print(f"{player_char.name} wins!")
+      print(f"{player_char.name} wins! is it time for a victory-dance?")
       break
     time.sleep(0.5)
-    print(f"{enemy.name} attacks!")
+    print(f"{enemy.name} attacks! OUCH!")
     player_char.set_health(enemy.attack)
     time.sleep(0.5)
     print(f"{enemy.name} dealt {enemy.attack} damage to {player_char.name}! {player_char.name} has {player_char.health} health left!")
     if player_char.alive == False:
       time.sleep(0.5)
-      print(f"{player_char.name} dies!")
+      print(f"{player_char.name} dies! NOOO!!")
       return True
     
 # Calls player-objects coordinate-move-methods to set player.coords. Uses room.has_enemy method to look for enemies in movement-menu-----
@@ -181,13 +230,15 @@ def player_move(player_char, dungeon):
       for room in dungeon:
         if room.coords == tuple(player_char.coords):
           if room.has_enemy(player_char.coords) and room.enemy.alive:
-            print("\nI see something moving in the shadows..")
+            print("\nI spot something moving in the shadows. Spooky!")
+            break
     elif movement == "n" or movement == "s":
       player_char.set_y_coord(movement)
       for room in dungeon:
         if room.coords == tuple(player_char.coords):
           if room.has_enemy(player_char.coords) and room.enemy.alive:
-            print("\nI see something moving in the shadows..")
+            print("\nI spot something moving in the shadows. Spooky!")
+            break
     elif movement == "help":
       print(move_help)
     else:
@@ -199,14 +250,13 @@ def player_inventory(player_char):
   print(inventory_help)
   print("\nI take a look inside my bag")
   while player_char.check_items():
-      player_input = input("\n[Inventory-menu]: Should I use an item? (y/n) ")
+      player_input = input("\n[Inventory-menu]: Should I use an item? (y/n) ").lower()
       if player_input == "help":
         print(inventory_help)
-      elif player_input == "n":
+      elif player_input == "n" or player_input == "back":
         break
       elif player_input == "y":
-        print(f"{player_char.inventory}")
-        inventory_use = input("\n[Inventory-menu]: Which item should I use? ")
+        inventory_use = input("\n[Use-menu]: Which item should I use? ").lower()
         if inventory_use == "help":
           print(inventory_help)
         elif inventory_use == "back":
@@ -217,15 +267,21 @@ def player_inventory(player_char):
             return "bad_end"
           if result == "good_end":
             return "good_end"
+          if result == "open_scroll":
+            open_scroll()
+            break
+      else:
+        print("\nInvalid input")
             
 def create_char():
   intro()
   while True:
     player_input = input("\nWhat is my name? ")
     if len(player_input) > 20:
-      print("\nI don't remember my name being this long.. I need to think harder..")
+      print("\nI don't remember my name being this long. I need to think harder.")
     else:
-      player = Character(str(player_input.capitalize()))
+      player = Character(str(player_input.lower().capitalize()))
+      print(f"\nYes.. That's right.. my name is {player_input.lower().capitalize()}!")
       return player
     
 # Creates player and dungeon objects to player_menu function if the user wants to play-----
@@ -248,6 +304,7 @@ def game_start():
 # Main-menu to navigate to the sub-menus, checks for triggers to game over flags depending on returns from player_inventory() and check_for_enemy()-----
 
 def player_menu(player_char, dungeon):
+  print(f"\nWelcome to the Dankest Dungeon adventurer! If you're stuck type 'help' to bring out the game-controls.")
   game_over_flag = False
   while not game_over_flag:
     player_input = input("\n[Main-menu]: What would I like to do? ").lower()

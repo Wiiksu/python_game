@@ -63,32 +63,55 @@ intro_text = r"""
 
 """
 
+scroll = r"""
+  ______________________________________________
+=(__    ___      __     _     ____     ___   ___)=
+   |                                           |
+   |                                           |
+   |   'To vanquish the Master,                |
+   |    a blade of power you must wield,'      |
+   |                                           |
+   |   'Find the Sword of Vanquishing          |
+   |     on the ancient battlefield,'          |
+   |                                           |
+   |   'Seek the Crown of Domination,          |
+   |     a regal treasure rare,'               |
+   |                                           |
+   |   'In the room with the pillar of light,  |
+   |     its destiny to wear.'                 |
+   |                                           |
+   |                                           |
+  _|    ___      __     _     ____     ___   __|
+=(______________________________________________)=
+
+"""
+
 descriptions = [
-    "\na cold room with frozen stone walls and two thick wooden doors leading south and east..", # coords: (1.1)
-    "\na cold room with frozen stone walls and three thick wooden doors leading east, west and south..", # coords: (2.1)
-    "\na cold room with frozen stone walls and three thick wooden doors leading east, west and south.. you sense something unsettling from the south", # coords: (3.1)
-    "\na cold room with frozen stone walls and three thick wooden doors leading east, west and south..", # coords: (4.1)
-    "\na cold room with frozen stone walls and two thick wooden doors leading south and west..", # coords: (5.1)
-    "\na slightly cold room with stone walls cold to the touch and three thick wooden doors leading north, south and east..", # coords: (1.2)
-    "\na slightly cold room with stone walls cold to the touch and four thick wooden doors leading to all directions..", # coords: (2.2)
-    "\na slightly cold room with stone walls cold to the touch and three thick wooden doors leading east, west and north and one strange door to the south.. you feel something omnious from the south", # coords: (3.2)
-    "\na slightly cold room with stone walls cold to the touch and four thick wooden doors leading to all directions..", # coords: (4.2)
-    "\na slightly cold room with stone walls cold to the touch and three thick wooden doors leading north, south and west..", # coords: (5.2)
-    "\na room with foreboding atmosphere, dark walls and three thick wooden doors leading north, south and east.. you sense something unsettling from the east", # coords: (1.3)
-    "\na room with foreboding atmosphere, dark walls and three thick wooden doors leading north, south and west.. you feel something omnious from the east", # coords: (2.3)
-    "\nThe walls and doors of this room are ever moving and distorting, it's like nothing out of this world.. You are completely surrounded by darkness and malice..", # coords: (3.3)
-    "\na room with foreboding atmosphere, dark walls and three thick wooden doors leading south, north and east.. you feel something omnious from the west", # coords: (4.3)
-    "\na room with foreboding atmosphere with stone walls and three thick wooden doors leading north, south and west.. you sense something unsettling from the west", # coords: (5.3)
-    "\na slightly warm room with stone walls and three thick wooden doors leading north, south and east..", # coords: (1.4)
-    "\na slightly warm room with stone walls and four thick wooden doors leading to all directions..", # coords: (2.4)
-    "\na slightly warm room with stone walls and three thick wooden doors leading east, west and south.. you feel something omnious from the north", # coords: (3.4)
-    "\na slightly warm room with stone walls and four thick wooden doors leading to all directions..", # coords: (4.4)
-    "\na slightly warm room with stone walls and three thick wooden doors leading north, south and west..", # coords: (5.4)
-    "\na warm room with marble walls and two thick wooden doors leading north and east..", # coords: (1.5)
-    "\na warm room with marble walls and three thick wooden doors leading east, west and north..", # coords: (2.5)
-    "\na warm room marble walls and three thick wooden doors leading east, west and north.. you sense something unsettling from the north", # coords: (3.5)
-    "\na warm room with marble walls and three thick wooden doors leading east, west and north..", # coords: (4.5)
-    "\na warm room with marble walls and two thick wooden doors leading north and west.. a round opening in the ceiling projects a pillar of light in the center of the room.", # coords: (5.5)
+    "\na cold room with frozen stone walls and two thick wooden doors leading south and east. Judging by the armored skeletons all around an ancient battle was fought here. ", # coords: (1.1)
+    "\na cold room with frozen stone walls and three thick wooden doors leading east, west and south.", # coords: (2.1)
+    "\na cold room with frozen stone walls and three thick wooden doors leading east, west and south. you sense something unsettling from the south.", # coords: (3.1)
+    "\na cold room with frozen stone walls and three thick wooden doors leading east, west and south.", # coords: (4.1)
+    "\na cold room with frozen stone walls and two thick wooden doors leading south and west.", # coords: (5.1)
+    "\na slightly cold room with stone walls cold to the touch and three thick wooden doors leading north, south and east.", # coords: (1.2)
+    "\na slightly cold room with stone walls cold to the touch and four thick wooden doors leading to all directions.", # coords: (2.2)
+    "\na slightly cold room with stone walls cold to the touch and three thick wooden doors leading east, west and north and one strange door to the south. you feel something omnious from the south.", # coords: (3.2)
+    "\na slightly cold room with stone walls cold to the touch and four thick wooden doors leading to all directions.", # coords: (4.2)
+    "\na slightly cold room with stone walls cold to the touch and three thick wooden doors leading north, south and west.", # coords: (5.2)
+    "\na room with foreboding atmosphere, dark walls and three thick wooden doors leading north, south and east. you sense something unsettling from the east.", # coords: (1.3)
+    "\na room with foreboding atmosphere, dark walls and three thick wooden doors leading north, south and west. you feel something omnious from the east.", # coords: (2.3)
+    "\nThe walls and doors of this room are ever moving and distorting, a tattered red carpet leads to the back of the room where you spot a massive throne. You are completely surrounded by darkness and malice.", # coords: (3.3)
+    "\na room with foreboding atmosphere, dark walls and three thick wooden doors leading south, north and east. you feel something omnious from the west.", # coords: (4.3)
+    "\na room with foreboding atmosphere with stone walls and three thick wooden doors leading north, south and west. you sense something unsettling from the west.", # coords: (5.3)
+    "\na slightly warm room with stone walls and three thick wooden doors leading north, south and east.", # coords: (1.4)
+    "\na slightly warm room with stone walls and four thick wooden doors leading to all directions.", # coords: (2.4)
+    "\na slightly warm room with stone walls and three thick wooden doors leading east, west and south. you feel something omnious from the north.", # coords: (3.4)
+    "\na slightly warm room with stone walls and four thick wooden doors leading to all directions.", # coords: (4.4)
+    "\na slightly warm room with stone walls and three thick wooden doors leading north, south and west.", # coords: (5.4)
+    "\na warm room with marble walls and two thick wooden doors leading north and east.", # coords: (1.5)
+    "\na warm room with marble walls and three thick wooden doors leading east, west and north.", # coords: (2.5)
+    "\na warm room marble walls and three thick wooden doors leading east, west and north. you sense something unsettling from the north.", # coords: (3.5)
+    "\na warm room with marble walls and three thick wooden doors leading east, west and north.", # coords: (4.5)
+    "\na warm room with marble walls and two thick wooden doors leading north and west. a round opening in the ceiling projects a pillar of light in the center of the room.", # coords: (5.5)
 ]
 
 wrong_input = "[Invalid input, type 'help' to list the game controls.]"
